@@ -1,34 +1,47 @@
 import React from "react";
 import { Counter } from "features/counter/Counter";
 import "./App.scss";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import Student from "../features/student/Student";
 import Teacher from "../features/teacher/Teacher";
 import { Home } from "./Home";
-import { Auth0Provider } from "@auth0/auth0-react";
 import { Navbar } from "./Navbar";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Loading } from "./Loading";
+import { Login } from "./Login";
 
 function App() {
-  const domain = process.env.REACT_APP_AUTH0_DOMAIN as string;
-  const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID as string;
+  const { isLoading, isAuthenticated, user } = useAuth0();
+  // TODO: local storage
+  const roles: string[] = isAuthenticated
+    ? user["http://demozero.net"].roles || []
+    : [];
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Router>
-      <Auth0Provider
-        domain={domain}
-        clientId={clientId}
-        redirectUri={window.location.origin}
-      >
-        <Navbar />
-        <Switch>
-          {/* TODO: check if need to wrap auth0 login page. */}
-          <Route exact path="/login" />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/counter" component={Counter} />
-          <Route exact path="/student" component={Student} />
-          <Route exact path="/teacher" component={Teacher} />
-        </Switch>
-      </Auth0Provider>
+      {isAuthenticated && <Navbar />}
+      <Switch>
+        <Route exact path="/">
+          {isAuthenticated ? <Home /> : <Redirect to="/login" />}
+        </Route>
+        {/* TODO: should we use embedded login page? */}
+        <Route exact path="/login" component={Login} />
+        {/* FIXME: user can access following routes without authenticate! */}
+        <Route exact path="/counter" component={Counter} />
+        <Route exact path="/student">
+          {roles.includes("student") ? <Student /> : <Redirect to="/login" />}
+        </Route>
+        <Route exact path="/teacher" component={Teacher} />
+      </Switch>
     </Router>
   );
 }
