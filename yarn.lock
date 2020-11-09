@@ -1649,11 +1649,6 @@
   resolved "https://registry.npm.taobao.org/@types/aria-query/download/@types/aria-query-4.2.0.tgz#14264692a9d6e2fa4db3df5e56e94b5e25647ac0"
   integrity sha1-FCZGkqnW4vpNs99eVulLXiVkesA=
 
-"@types/auth0@^2.20.9":
-  version "2.20.9"
-  resolved "https://registry.npm.taobao.org/@types/auth0/download/@types/auth0-2.20.9.tgz#cf63b9797d9b8bcf967016a333f0a99593c2ab61"
-  integrity sha1-z2O5eX2bi8+WcBajM/CplZPCq2E=
-
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.7":
   version "7.1.12"
   resolved "https://registry.npm.taobao.org/@types/babel__core/download/@types/babel__core-7.1.12.tgz#4d8e9e51eb265552a7e4f1ff2219ab6133bdfb2d"
