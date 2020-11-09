@@ -10,10 +10,10 @@ import {
 import Student from "../features/student/Student";
 import Teacher from "../features/teacher/Teacher";
 import { Home } from "./Home";
-import { Navbar } from "./Navbar";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Loading } from "./Loading";
 import { Login } from "./Login";
+import { Navbar } from "./Navbar";
 
 function App() {
   const { isLoading, isAuthenticated, user } = useAuth0();
